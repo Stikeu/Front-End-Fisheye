@@ -1,45 +1,33 @@
-    async function getPhotographers() {
-        // Penser à remplacer par les données récupérées dans le json
-        const photographers = [
-            {
-                "name": "Ma data test",
-                "id": 1,
-                "city": "Paris",
-                "country": "France",
-                "tagline": "Ceci est ma data test",
-                "price": 400,
-                "portrait": "account.png"
-            },
-            {
-                "name": "Autre data test",
-                "id": 2,
-                "city": "Londres",
-                "country": "UK",
-                "tagline": "Ceci est ma data test 2",
-                "price": 500,
-                "portrait": "account.png"
-            },
-        ]
-        // et bien retourner le tableau photographers seulement une fois
-        return ({
-            photographers: [...photographers, ...photographers, ...photographers]})
-    }
+    import { photographersApi } from "../api/api.js";
+    import { photographerFactory } from "../factories/photographer.js";
 
-    async function displayData(photographers) {
-        const photographersSection = document.querySelector(".photographer_section");
+    class indexTemplate {
+        constructor(){
+            this.photographersApi = new photographersApi("../data/photographers.json")
 
-        photographers.forEach((photographer) => {
-            const photographerModel = photographerFactory(photographer);
-            const userCardDOM = photographerModel.getUserCardDOM();
-            photographersSection.appendChild(userCardDOM);
-        });
-    };
-
-    async function init() {
-        // Récupère les datas des photographes
-        const { photographers } = await getPhotographers();
-        displayData(photographers);
-    };
+        }
+        async displayData(photographers) {
+            const listPhotographers = await this.photographersApi.getPhotographers();
+            const photographersSection = document.querySelector(".photographer_section");
     
-    init();
+            listPhotographers.forEach((photographer) => {
+                const photographerModel = new photographerFactory(photographer);
+                const userCardDOM = photographerModel.getUserCardDOM() ;
+                console.log(photographerModel);
+                photographersSection.appendChild(userCardDOM);
+                
+            });
+        };
+    
+        async  init() {
+            // Récupère les datas des photographes
+                displayData();
+                console.log(photographers.getPhotographers())
+        };
+        
+    }
+    
+   
+    const indextemplate = new indexTemplate();
+    indextemplate.displayData();
     
