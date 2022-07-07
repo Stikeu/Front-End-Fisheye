@@ -13,6 +13,13 @@ class Api {
             .then(res => res.photographers)
             .catch(err => console.log('an error occurs', err))
     }
+    
+    async getMedia(){
+        return fetch(this._url)
+        .then(res => res.json())
+        .then(res => res.media)
+        .catch(err => console.log('an error occurs', err))
+    }
 }
 
 
@@ -30,4 +37,19 @@ class photographersApi extends Api {
     }
 }
 
+class mediaPhotographersApi extends Api{
+    /**
+     * 
+     * @param {string} url 
+     */
+     constructor(url) {
+        super(url)
+    }
+
+    async getMediaPhotographers() {
+        return await this.getMedia()
+    }
+}
+
 export {photographersApi}
+export {mediaPhotographersApi}
