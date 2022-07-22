@@ -1,7 +1,7 @@
 class photographerFactory {
     constructor(data)
     {
-        this._portrait = `../assets/photographers/${data.portrait}`;
+        this._portrait = `../assets/photographers/Photographers ID Photos/${data.portrait}`;
         this._name = data.name;
         this._city = data.city;
         this._id = `photographer.html?id=${data.id}`;
@@ -12,7 +12,8 @@ class photographerFactory {
         const goToPhotographers = document.createElement( 'a' );
         goToPhotographers.href = this._id;
         const img = document.createElement( 'img' );
-        img.setAttribute("src", this._portrait)
+        img.setAttribute("src", this._portrait);
+        img.setAttribute("alt", this._name);
         const h2 = document.createElement( 'h2' );
         h2.textContent = this._name;
         const h3 = document.createElement( 'h3' );
