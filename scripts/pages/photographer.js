@@ -46,7 +46,7 @@ class photographerPage{
          console.log(header);
          // faire accesibilité img + css 
          const photographerHeader = `
-         <img src = "${img}/${photographer[0].portrait}">
+         <img class="portrait" src="${img}/${photographer[0].portrait}">
          <h1 class="profile_name"
          aria-label="Nom du photographe">${photographer[0].name}</h1>
          <h3 class="profile_origine"

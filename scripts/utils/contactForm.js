@@ -8,6 +8,7 @@ function displayModal() {
      modal.style.display = "none";
 }
 
+
 const submitBtn = document.querySelector(".contact_button")
 
 const form = document.getElementById("form");
@@ -46,11 +47,14 @@ prenom.addEventListener("input", (evt) => {
       errorName.style.fontSize = '0.8rem';
       prenom.style.border = 'solid red 2px';
       prenomCheck = false;
+      console.log("vrais")
     } else {
       errorName.style.display = "none";
       prenom.style.border = 'none';
       prenomCheck = true;
+      
     }
+    console.log("name " + inputValue.value);
   }
   
   function validateSecondName(inputValue) {
@@ -67,6 +71,7 @@ prenom.addEventListener("input", (evt) => {
       nom.style.border = "none"
       nomCheck = true;
     }
+    console.log("Second name " + inputValue.value)
   }
   
   function validateEmail(inputValue) {
@@ -83,11 +88,9 @@ prenom.addEventListener("input", (evt) => {
       email.style.border = 'none';
       emailCheck = true;
     }
+    console.log("Email " + inputValue.value)
   }
 
-  function checkReset() {
-    document.getElementById("test").style.opacity = "1";
-  }
 
   submitBtn.addEventListener("click", (evt) => {
     evt.preventDefault();
@@ -103,16 +106,19 @@ prenom.addEventListener("input", (evt) => {
       validateEmail(evt.target);
     });
 })
+function sendMessage(){
 
-submitBtn.addEventListener("click", (evt) => {
-    evt.preventDefault();
-    validateName(prenom);
-  validateSecondName(nom);
-  validateEmail(email);
-
-  if ( prenomCheck === true && nomCheck === true && emailCheck === true){
-    form.style.display = "none";
-    form.reset();
-  }
-
-})
+    prenom.addEventListener("input", (evt) => {
+        validateName(evt.target);
+      });
+    
+      nom.addEventListener("input", (evt) => {
+        validateSecondName(evt.target);
+      });
+    
+      email.addEventListener("input", (evt) => {
+        validateEmail(evt.target);
+      });
+        modal.style.display = "none";
+    
+}
