@@ -2,8 +2,8 @@
     background-color: #fafafa;
     height: 300px;
     margin: 0 100px;
-    display: grid;
-    grid-template-columns: 1fr 1fr auto;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
     padding: 0 50px;
   }
@@ -49,12 +49,21 @@
     justify-content: space-between;
   }
   
-  .image_title {
+  .video_titre, .image_titre {
     color: #901c1c;
     font-size: 24px;
     font-weight: 400;
   }
-
+  .image_likes {
+    display: flex;
+    align-items: center;
+  }
+  .likes_number {
+    font-size: 24px;
+    font-weight: 500;
+    color: #911c1c;
+    margin-right: 4px;
+  }
 
 #contact_modal {
     display: none;
