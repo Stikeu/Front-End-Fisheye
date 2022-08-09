@@ -42,11 +42,13 @@ class photographerPage{
     photographerHeader(photographer) {
          const header = document.querySelector('.photograph-header');
          const div = document.createElement('div');
+         const contactButton = document.querySelector('.contact_button');
+         const divImage = document.createElement('div');
          const img = "../assets/photographers/Photographers ID Photos/"
          console.log(header);
          // faire accesibilité img + css 
+         const image = `<img class="portrait" src="${img}/${photographer[0].portrait}"> `
          const photographerHeader = `
-         <img class="portrait" src="${img}/${photographer[0].portrait}">
          <h1 class="profile_name"
          aria-label="Nom du photographe">${photographer[0].name}</h1>
          <h3 class="profile_origine"
@@ -55,9 +57,22 @@ class photographerPage{
          aria-label="Slogan du photographe">${photographer[0].tagline}</p>
      `;
      div.innerHTML = photographerHeader;
+     divImage.innerHTML = image;
      header.appendChild(div)
+     header.appendChild(divImage)
+     header.insertBefore(div, contactButton)
     console.log(header)
      return header;
+    }
+
+    async addLike(){
+        const Likes = document.querySelectorAll(".likes_heart");
+        Likes.forEach((like) => {
+            like.addEventListener("click", (e) => {
+                e.preventDefault();
+                
+            });
+        });
     }
 
     async displayMedia(media){
@@ -72,6 +87,7 @@ class photographerPage{
             mediaSection.appendChild(mediaModel);
         })
     }
+
    async displayPhotographerPage(){
         const photographer = await this.getPhotographerById();
         const PhotographerNameById = await this.getPhotographerNameById();
