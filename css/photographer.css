@@ -36,8 +36,30 @@
   font-size: 24px;
   font-weight: 500;
 }
+#totals-likes{
+  display: flex;
+  align-items: center;
+}
 
+.order-media {
+  margin: 30px 100px;
+}
 
+.selectOrder {
+  font-size: 18px;
+  font-weight: 700;
+  margin-right: 10px;
+}
+
+#chooseOrder {
+  background-color: #901c1c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px;
+  font-size: 18px;
+  font-weight: 700;
+}
 
 .media_section {
     display: grid;

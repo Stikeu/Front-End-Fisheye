@@ -32,35 +32,3 @@ class photographerFactory {
 
 
  
-
-        // const goToPhotographers = document.createElement( 'a' );
-        // goToPhotographers.setAttribute("class", "photographer-link");
-        // goToPhotographers.setAttribute("aria-label", this._name);
-        // goToPhotographers.href = this._id;
-
-        // const img = document.createElement( 'img' );
-        // img.setAttribute("src", this._portrait);
-        // img.setAttribute("alt", this._name);
-        // img.setAttribute("class", "portriat");
-
-        // const h2 = document.createElement( 'h2' );
-        // h2.setAttribute("class", "name")
-        // h2.textContent = this._name;
-        
-        // const h3 = document.createElement( 'h3' );
-        // h3.setAttribute("class", "location");
-        // h3.textContent = this._city;
-        // h3.textContent = this._country;
-        
-        // const pTagline = document.createElement("p");
-        // pTagline.setAttribute("class", "tagline");
-        // pTagline.textContent = this._tagline;
-
-        // const pPrice = document.createElement("p");
-        
-
-        // article.appendChild(goToPhotographers);
-        // goToPhotographers.appendChild(img);
-        // goToPhotographers.appendChild(h2)
-        // article.appendChild(h3);
-        // return (article);

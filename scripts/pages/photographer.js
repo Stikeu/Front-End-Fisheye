@@ -1,4 +1,3 @@
-//Mettre le code JavaScript lié à la page photographer.html
 import {
     photographersApi
 } from "../api/api.js";
@@ -59,7 +58,7 @@ class photographerPage {
         const allLikes = document.createElement("div");
         console.log(header);
         // faire accesibilité img + css 
-        const image = `<img class="portrait" src="${img}/${photographer[0].portrait}"> `
+        const image = `<img class="portrait" alt="${photographer[0].name}" src="${img}/${photographer[0].portrait}"> `
         const photographerHeader = `
          <h1 class="profile_name"
          aria-label="Nom du photographe">${photographer[0].name}</h1>
@@ -74,7 +73,7 @@ class photographerPage {
         header.appendChild(divImage)
         header.insertBefore(div, contactButton)
 
-        allLikes.innerHTML = `<p id="total-likes">${media} 🖤</p>
+        allLikes.innerHTML = `<div id="totals-likes"><p id="total-likes">${media}</p><p>🖤</p></div>
                             <p>${photographer[0].price}€ / jour</p>`;
 
         allLikes.classList.add("photographer-likes");
@@ -83,6 +82,13 @@ class photographerPage {
         return header;
     }
 
+    orderMedia(media){
+        const popularityOption = document.getElementById("popularity");
+
+        popularityOption.addEventListener("click", (e)=> {
+
+        })
+    }
 
 
     async displayMedia(media) {
@@ -101,17 +107,26 @@ class photographerPage {
 
     addLike() {
         const Likes = document.querySelectorAll(".image_likes");
+        let totalLikes = document.getElementById("total-likes");
+        console.log(totalLikes.textContent);
         Likes.forEach((like) => {
             like.addEventListener("click", (e) => {
                 let likesValue = like.querySelector(".likes_number");
                 let likesNumber = +likesValue.textContent;
-                console.log(likesValue);
-                likesValue.textContent = ++likesNumber;
-                console.log(likesNumber);
-                like.classList.add("active");
+                let totalNumber = +totalLikes.textContent;
+                // likesValue.textContent = --likesNumber;
+                like.classList.toggle("active");
                 if (like.classList.contains("active")) {
-                    likesValue.textContent = --likesNumber;
+                    likesValue.textContent = ++likesNumber;
                     console.log(likesNumber)
+                    // totalLikes = ++totalLikes
+                    totalLikes.textContent = ++totalNumber
+                    console.log(totalLikes.textContent)
+                    // like.classList.remove("active");
+                } else {
+                    likesValue.textContent = --likesNumber;
+                    totalLikes.textContent = --totalNumber
+                    // totalLikes = --totalLikes
                     like.classList.remove("active");
                 }
             });
@@ -122,12 +137,8 @@ class photographerPage {
         const photographer = await this.getPhotographerById();
         const PhotographerNameById = await this.getPhotographerNameById();
         const likesTab = await this.sumOfAllLikes();
-        console.log(PhotographerNameById)
-        console.log(photographer)
         const medias = await this.getMediaById();
-        console.log(medias)
         const header = this.photographerHeader(photographer, likesTab);
-        console.log(header)
         this.displayMedia();
 
 
