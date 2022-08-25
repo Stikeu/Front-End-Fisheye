@@ -1,6 +1,5 @@
 class mediaFactory { 
     constructor(data, photographerName){
-        console.log(data)
         if (data.video != undefined) {
             return (new PhotographerVideo(data, photographerName)).photographerVideoCard();
         } else if(data.image != undefined) {
@@ -22,7 +21,6 @@ class PhotographerVideo{
         const namePhotographer = this._photographerName.split(" ");
         const pathName = namePhotographer[0].replace("-"," ");
         this._mediaPath = `../assets/photographers/${pathName}/${this._video}`;
-        console.log(data)
     }
     photographerVideoCard(){
         const article = document.createElement("article");

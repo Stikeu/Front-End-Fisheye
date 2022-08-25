@@ -1,7 +1,7 @@
 const modal = document.getElementById("contact_modal");
 
 function displayModal() {
-	modal.style.display = "block";
+	modal.style.display = "flex";
 }
 
  function closeModal() {
