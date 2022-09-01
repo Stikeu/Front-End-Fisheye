@@ -7,6 +7,9 @@ import {
 import {
     mediaFactory
 } from "../factories/mediaFactory.js";
+import {
+    lightbox
+} from "../utils/lightbox.js"
 const mediaSection = document.querySelector(".media_section")
 class photographerPage {
 
@@ -85,7 +88,7 @@ class photographerPage {
         photographerMedia.forEach((media) => {
             const mediaModel = new mediaFactory(media, name)
             mediaSection.appendChild(mediaModel);
-            globalLightboxListeners();
+           lightbox();
         })
         this.addLike();
     }
@@ -97,7 +100,7 @@ class photographerPage {
             const mediaModel = new mediaFactory(media, name);
             console.log(mediaModel)
             mediaSection.appendChild(mediaModel);
-            globalLightboxListeners();
+           lightbox();
         })
     }
 
@@ -109,7 +112,7 @@ class photographerPage {
             console.log(media);
             document.querySelector(".media_section").innerHTML="";
             this.displayMediaOrder(media);
-            globalLightboxListeners();
+           lightbox();
         })
     }
     trie(option, media) {
@@ -185,11 +188,12 @@ class photographerPage {
         const header = this.photographerHeader(photographer, likesTab);
         this.orderMedia(medias);
         this.displayMedia();
-        globalLightboxListeners();
-        console.log(globalLightboxListeners())
+        lightbox();
+        
     }
 }
 
+export {photographerPage}
 const photographerPageTest = new photographerPage();
 photographerPageTest.displayPhotographerPage();
 photographerPageTest.addLike();

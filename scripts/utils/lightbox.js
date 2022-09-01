@@ -1,3 +1,8 @@
+import { photographerPage } from "../pages/photographer.js";
+
+var currentImageId = 0;
+var imageURL;
+export function lightbox(){
 function displayLightbox(imageURL, imageAlt) {
     const lightbox = document.getElementById("lightbox");
     const header = document.getElementById("header");
@@ -7,7 +12,7 @@ function displayLightbox(imageURL, imageAlt) {
     header.setAttribute("aria-hidden", true);
     main.setAttribute("aria-hidden", true);
     lightbox.setAttribute("aria-hidden", false);
-    imageContainer = document.querySelector(".image-container");
+    const imageContainer = document.querySelector(".image-container");
 
     if (imgExtension === "mp4") {
       imageContainer.innerHTML = `<video id="image" src="${imageURL}" alt="${imageAlt} " class="image-lightbox" controls/>`;
@@ -36,24 +41,21 @@ function displayLightbox(imageURL, imageAlt) {
     document.getElementById("contact").focus();
   }
   
-  function nextImage() {
-    const images = Array.from(document.querySelectorAll(".video_image"));
-    const gallery = images.map((image) => image.getAttribute("src"));
-    const currentImage = document.getElementById("image");
-  
-    let imgIndex = gallery.findIndex(
-      (img) => img === currentImage.getAttribute("src")
+  async function nextImage() {
+    const images = await new photographerPage().getMediaById();
+    console.log(images)
+    let imgIndex = images.findIndex(
+      (img) => img.id === currentImageId
     );
-    if (imgIndex === gallery.length - 1) {
+    if (imgIndex === images.length - 1) {
       imgIndex = -1;
     }
-  
-    const nextImageAlt = images[imgIndex + 1]
-      .getAttribute("alt")
-      .split(",")
-      .slice(0, 1);
-  
-    displayLightbox(gallery[imgIndex + 1], nextImageAlt);
+    console.log(imgIndex)
+    const nextImageAlt = images[imgIndex + 1].title; 
+    console.log(nextImageAlt)
+    currentImageId = images[imgIndex + 1].id;
+    console.log(currentImageId)
+    displayLightbox(imageURL, nextImageAlt);
   }
   
   function prevImage() {
@@ -80,16 +82,18 @@ function displayLightbox(imageURL, imageAlt) {
     }
   }
   
-function globalLightboxListeners() {
+   
     const images = Array.from(document.querySelectorAll(".video_image"));
     const imgLink = Array.from(document.querySelectorAll(".mediaLightbox"));
   
     images.forEach((image) =>
       image.addEventListener("click", (e) => {
         e.preventDefault();
-  
-        const imageURL = image.getAttribute("src");
+        
+        imageURL = image.getAttribute("src");
         const imageAlt = image.getAttribute("alt").split(",").slice(0, 1);
+        currentImageId = image.getAttribute("id");
+        
   
         displayLightbox(imageURL, imageAlt);
       })
