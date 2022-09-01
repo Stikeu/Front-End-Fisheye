@@ -7,7 +7,7 @@ import {
 import {
     mediaFactory
 } from "../factories/mediaFactory.js";
-
+const mediaSection = document.querySelector(".media_section")
 class photographerPage {
 
     constructor(data) {
@@ -81,14 +81,24 @@ class photographerPage {
     async displayMedia(media) {
         const photographerMedia = await this.getMediaById();
         const name = await this.getPhotographerNameById();
-        const mediaSection = document.querySelector(".media_section")
+        // const mediaSection = document.querySelector(".media_section")
         photographerMedia.forEach((media) => {
             const mediaModel = new mediaFactory(media, name)
             mediaSection.appendChild(mediaModel);
-
+            globalLightboxListeners();
         })
-
         this.addLike();
+    }
+
+    async displayMediaOrder(media){
+        const photographerMedia = media;
+        const name = await this.getPhotographerNameById();
+        photographerMedia.forEach((media) => {
+            const mediaModel = new mediaFactory(media, name);
+            console.log(mediaModel)
+            mediaSection.appendChild(mediaModel);
+            globalLightboxListeners();
+        })
     }
 
     orderMedia(media) {
@@ -97,9 +107,9 @@ class photographerPage {
         selectElement.addEventListener("click", (e) => {
             media = this.trie(e.target.value, media);
             console.log(media);
-            document.getElementById("main").removeChild(document.querySelector(".media_section"));
-            this.displayMedia(media);
-            console.log(this.displayMedia(media))
+            document.querySelector(".media_section").innerHTML="";
+            this.displayMediaOrder(media);
+            globalLightboxListeners();
         })
     }
     trie(option, media) {
@@ -175,6 +185,8 @@ class photographerPage {
         const header = this.photographerHeader(photographer, likesTab);
         this.orderMedia(medias);
         this.displayMedia();
+        globalLightboxListeners();
+        console.log(globalLightboxListeners())
     }
 }
 

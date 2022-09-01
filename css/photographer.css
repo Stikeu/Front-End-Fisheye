@@ -188,3 +188,55 @@
     border: none;
     border-radius: 5px;
 }
+
+#lightbox {
+  display: none;
+  position: fixed;
+  width: 70%;
+  top: 4%;
+  z-index: 1;
+}
+
+.image-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: fit-content;
+  margin: auto;
+}
+
+.image-lightbox {
+  object-fit: cover;
+  border-radius: 5px;
+  max-width: 700px;
+  height: 720px;
+}
+
+.image-lightbox-title {
+  font-size: 20px;
+  color: #901c1c;
+}
+
+#lightbox button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.lightbox-cross {
+  position: absolute;
+  right: 40px;
+}
+
+.lightbox-next {
+  position: absolute;
+  right: 40px;
+  top: 50%;
+}
+
+.lightbox-prev {
+  transform: rotate(180deg);
+  position: absolute;
+  top: 50%;
+  left: 40px;
+}

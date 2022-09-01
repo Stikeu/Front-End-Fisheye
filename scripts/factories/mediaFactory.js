@@ -25,7 +25,7 @@ class PhotographerVideo{
     photographerVideoCard(){
         const article = document.createElement("article");
         const div = document.createElement("div");
-        const img_video = document.createElement("div");
+        const img_video = document.createElement("a");
         img_video.innerHTML = `<video controls alt="${this._name}"
         <source class="video_image" src="${this._mediaPath}" type="video/mp4">
         >`
@@ -36,6 +36,8 @@ class PhotographerVideo{
             <img src="assets/icons/heart.png" class="likes_heart" alt="heart icon">
         </div>`;
         div.classList.add("contenue");
+        // img_video.setAttribute("aria-label", `${title}`);
+        img_video.classList.add("mediaLightbox");
         article.appendChild(img_video);
         article.appendChild(div);
         article.classList.add("article");
@@ -56,7 +58,7 @@ class PhotographerImage{
     photographerImageCard(){
         const article = document.createElement("article");
         const div = document.createElement("div");
-        const img_video = document.createElement("div");
+        const img_video = document.createElement("a");
         img_video.innerHTML = `<img src="${this._mediaPath}" alt="${this._name}, closeup view" class="video_image">`
         div.innerHTML = 
         `<p class="image_titre">${this._name}</p>
@@ -64,7 +66,9 @@ class PhotographerImage{
             <span class="likes_number">${this._likes}</span>
             <img src="assets/icons/heart.png" class="likes_heart" alt="heart icon">
         </div>`;
-        div.classList.add("contenue")
+        div.classList.add("contenue");
+        // img_video.setAttribute("aria-label", `${title}`);
+        img_video.classList.add("mediaLightbox");
         article.appendChild(img_video);
         article.appendChild(div)
         article.classList.add("article")
