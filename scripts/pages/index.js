@@ -6,7 +6,7 @@
             this.photographersApi = new photographersApi("../data/photographers.json")
 
         }
-        async displayData(photographers) {
+        async displayData() {
             const listPhotographers = await this.photographersApi.getPhotographers();
             const photographersSection = document.querySelector(".photographer_section");
     
@@ -17,14 +17,12 @@
                 photographersSection.appendChild(userCardDOM);
                 
             });
-        };
+        }
     
         async  init() {
             // Récupère les datas des photographes
-                displayData();
-                console.log(photographers.getPhotographers())
-        };
-        
+                this.displayData();
+        }      
     }
     
    

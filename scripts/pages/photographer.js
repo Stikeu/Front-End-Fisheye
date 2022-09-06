@@ -13,7 +13,7 @@ import {
 const mediaSection = document.querySelector(".media_section")
 class photographerPage {
 
-    constructor(data) {
+    constructor() {
         this.photographersApi = new photographersApi("../data/photographers.json");
         this.mediaPhotographersApi = new mediaPhotographersApi("../data/photographers.json");
         this.photographerId = new URLSearchParams(window.location.search).get("id");
@@ -81,38 +81,36 @@ class photographerPage {
 
 
 
-    async displayMedia(media) {
+    async displayMedia() {
         const photographerMedia = await this.getMediaById();
         const name = await this.getPhotographerNameById();
         // const mediaSection = document.querySelector(".media_section")
         photographerMedia.forEach((media) => {
             const mediaModel = new mediaFactory(media, name)
             mediaSection.appendChild(mediaModel);
-           lightbox();
+            lightbox();
         })
         this.addLike();
     }
 
-    async displayMediaOrder(media){
+    async displayMediaOrder(media) {
         const photographerMedia = media;
         const name = await this.getPhotographerNameById();
         photographerMedia.forEach((media) => {
             const mediaModel = new mediaFactory(media, name);
             console.log(mediaModel)
             mediaSection.appendChild(mediaModel);
-           lightbox();
+            lightbox();
         })
     }
 
     orderMedia(media) {
         const selectElement = document.getElementById("chooseOrder");
-        const allOption = document.getElementById("allOption");
         selectElement.addEventListener("click", (e) => {
             media = this.trie(e.target.value, media);
             console.log(media);
-            document.querySelector(".media_section").innerHTML="";
+            document.querySelector(".media_section").innerHTML = "";
             this.displayMediaOrder(media);
-           lightbox();
         })
     }
     trie(option, media) {
@@ -161,7 +159,7 @@ class photographerPage {
         const Likes = document.querySelectorAll(".image_likes");
         let totalLikes = document.getElementById("total-likes");
         Likes.forEach((like) => {
-            like.addEventListener("click", (e) => {
+            like.addEventListener("click", () => {
                 let likesValue = like.querySelector(".likes_number");
                 let likesNumber = +likesValue.textContent;
                 let totalNumber = +totalLikes.textContent;
@@ -182,18 +180,19 @@ class photographerPage {
 
     async displayPhotographerPage() {
         const photographer = await this.getPhotographerById();
-        const PhotographerNameById = await this.getPhotographerNameById();
         const likesTab = await this.sumOfAllLikes();
         const medias = await this.getMediaById();
-        const header = this.photographerHeader(photographer, likesTab);
+        this.photographerHeader(photographer, likesTab);
         this.orderMedia(medias);
         this.displayMedia();
         lightbox();
-        
+
     }
 }
 
-export {photographerPage}
+export {
+    photographerPage
+}
 const photographerPageTest = new photographerPage();
 photographerPageTest.displayPhotographerPage();
 photographerPageTest.addLike();

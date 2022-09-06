@@ -1,14 +1,11 @@
-import { photographerPage } from "../pages/photographer.js";
-
-var currentImageId = 0;
-var imageURL;
-export function lightbox(){
-function displayLightbox(imageURL, imageAlt) {
+var currentImage = "";
+export function lightbox() {
+  function displayLightbox(imageURL, imageAlt) {
     const lightbox = document.getElementById("lightbox");
     const header = document.getElementById("header");
     const main = document.getElementById("main");
     const imgExtension = imageURL.split(".").pop();
-    
+
     header.setAttribute("aria-hidden", true);
     main.setAttribute("aria-hidden", true);
     lightbox.setAttribute("aria-hidden", false);
@@ -27,7 +24,7 @@ function displayLightbox(imageURL, imageAlt) {
     main.style.opacity = "0.1";
     lightbox.style.display = "block";
   }
-  
+
   function closeLightbox() {
     const lightbox = document.getElementById("lightbox");
     const header = document.getElementById("header");
@@ -40,33 +37,35 @@ function displayLightbox(imageURL, imageAlt) {
     lightbox.style.display = "none";
     document.getElementById("contact").focus();
   }
-  
+
   async function nextImage() {
-    const images = await new photographerPage().getMediaById();
-    console.log(images)
-    let imgIndex = images.findIndex(
-      (img) => img.id === currentImageId
-    );
-    if (imgIndex === images.length - 1) {
-      imgIndex = -1;
+    const images = Array.from(document.querySelectorAll(".video_image"));
+    const gallery = images.map((image) => image.getAttribute("src"));
+
+    let imgIndex = gallery.findIndex((img) => img === currentImage);
+
+    if (imgIndex === gallery.length - 1) {
+      imgIndex = -1
+
     }
-    console.log(imgIndex)
-    const nextImageAlt = images[imgIndex + 1].title; 
-    console.log(nextImageAlt)
-    currentImageId = images[imgIndex + 1].id;
-    console.log(currentImageId)
-    displayLightbox(imageURL, nextImageAlt);
+    const nextImageAlt = images[imgIndex + 1]
+      .getAttribute("alt")
+      .split(",")
+      .slice(0, 1);
+    currentImage = gallery[imgIndex + 1]
+    displayLightbox(currentImage, nextImageAlt);
+
   }
-  
+
   function prevImage() {
     const images = Array.from(document.querySelectorAll(".video_image"));
     const gallery = images.map((image) => image.getAttribute("src"));
     const currentImage = document.getElementById("image");
-  
+
     let imgIndex = gallery.findIndex(
       (img) => img === currentImage.getAttribute("src")
     );
-  
+
     if (imgIndex === 0) {
       const prevImageAlt = images[images.length - 1]
         .getAttribute("alt")
@@ -81,52 +80,54 @@ function displayLightbox(imageURL, imageAlt) {
       displayLightbox(gallery[imgIndex - 1], prevImageAlt);
     }
   }
-  
-   
-    const images = Array.from(document.querySelectorAll(".video_image"));
-    const imgLink = Array.from(document.querySelectorAll(".mediaLightbox"));
-  
-    images.forEach((image) =>
-      image.addEventListener("click", (e) => {
-        e.preventDefault();
-        
-        imageURL = image.getAttribute("src");
-        const imageAlt = image.getAttribute("alt").split(",").slice(0, 1);
-        currentImageId = image.getAttribute("id");
-        
-  
-        displayLightbox(imageURL, imageAlt);
-      })
-    );
 
-    imgLink.forEach((element) => {
-      element.addEventListener("keydown", (e) => {
-        if (e.keyCode === 13) {
-          const imageURL = element.firstChild.getAttribute("src");
-          const imageAlt = element.firstChild
-            .getAttribute("alt")
-            .split(",")
-            .slice(0, 1);
-          displayLightbox(imageURL, imageAlt);
-        }
-      });
+  const images = Array.from(document.querySelectorAll(".video_image"));
+  const imgLink = Array.from(document.querySelectorAll(".mediaLightbox"));
+
+  images.forEach((image) =>
+    image.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const imageAlt = image.getAttribute("alt").split(",").slice(0, 1);
+      currentImage = image.getAttribute("src");
+
+
+      displayLightbox(currentImage, imageAlt);
+    })
+  );
+
+  imgLink.forEach((element) => {
+    element.addEventListener("keydown", (e) => {
+      if (e.keyCode === 13) {
+        const imageURL = element.firstChild.getAttribute("src");
+        const imageAlt = element.firstChild
+          .getAttribute("alt")
+          .split(",")
+          .slice(0, 1);
+        displayLightbox(imageURL, imageAlt);
+      }
     });
-  
+  });
+
 
   const nextBtn = document.querySelector(".lightbox-next");
   const prevBtn = document.querySelector(".lightbox-prev");
-  
-  
+  const closeBtn = document.querySelector(".lightbox-cross")
+
+  closeBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    closeLightbox();
+  });
   nextBtn.addEventListener("click", (e) => {
     e.preventDefault();
     nextImage();
   });
-  
+
   prevBtn.addEventListener("click", (e) => {
     e.preventDefault();
     prevImage();
   });
-  
+
   window.addEventListener("keydown", (e) => {
     if (
       document.getElementById("lightbox").getAttribute("aria-hidden") == "false"
@@ -142,7 +143,7 @@ function displayLightbox(imageURL, imageAlt) {
         case "Escape":
           closeLightbox();
           break;
-  
+
         default:
           return;
       }

@@ -11,7 +11,6 @@ function displayModal() {
 
 const submitBtn = document.querySelector(".contact_button")
 
-const form = document.getElementById("form");
 const prenom = document.getElementById("first");
 const nom = document.getElementById("last");
 const email = document.getElementById("email");
@@ -21,9 +20,6 @@ const errorName = document.querySelector('.errorName');
 const errorSecName = document.querySelector(".errorSecName");
 const errorEmail = document.querySelector(".errorEmail");
 
-let prenomCheck;
-let nomCheck;
-let emailCheck;
 
 prenom.addEventListener("input", (evt) => {
     validateName(evt.target)
@@ -46,12 +42,9 @@ prenom.addEventListener("input", (evt) => {
       errorName.style.color = "red";
       errorName.style.fontSize = '0.8rem';
       prenom.style.border = 'solid red 2px';
-      prenomCheck = false;
-      console.log("vrais")
     } else {
       errorName.style.display = "none";
       prenom.style.border = 'none';
-      prenomCheck = true;
       
     }
     console.log("name " + inputValue.value);
@@ -65,11 +58,9 @@ prenom.addEventListener("input", (evt) => {
       errorSecName.style.color = "red";
       errorSecName.style.fontSize = '0.8rem';
       nom.style.border = 'solid red 2px';
-      nomCheck = false;
     } else {
       errorSecName.style.display = "none";
       nom.style.border = "none"
-      nomCheck = true;
     }
     console.log("Second name " + inputValue.value)
   }
@@ -82,11 +73,9 @@ prenom.addEventListener("input", (evt) => {
       errorEmail.style.color = "red";
       errorEmail.style.fontSize = '0.8rem';
       email.style.border = 'solid red 2px';
-      emailCheck = false;
     } else {
       errorEmail.style.display = "none";
       email.style.border = 'none';
-      emailCheck = true;
     }
     console.log("Email " + inputValue.value)
   }
