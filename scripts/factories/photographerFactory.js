@@ -1,6 +1,6 @@
 class photographerFactory {
-    constructor(data)
-    {
+    constructor(data) {
+        //récupération des données dans le dossier json
         this._portrait = `../assets/photographers/Photographers ID Photos/${data.portrait}`;
         this._name = data.name;
         this._city = data.city;
@@ -8,13 +8,13 @@ class photographerFactory {
         this._country = data.country;
         this._tagline = data.tagline;
         this._price = data.price;
-        console.log(data)
     }
-        getUserCardDOM() {
-        const article = document.createElement( 'article' );
+    // Création de l'article pour afficher les photographer
+    getUserCardDOM() {
+        const article = document.createElement('article');
 
-        article.innerHTML = 
-        `<a href="${this._id}" class="photographer_link" aria-label="${this._name}">
+        article.innerHTML =
+            `<a href="${this._id}" class="photographer_link" aria-label="${this._name}">
         <img src="${this._portrait}" class="portrait" alt="${this._name}">
         <h2 class="name">${this._name}</h2>
         </a>
@@ -22,13 +22,10 @@ class photographerFactory {
         <p class="tagline">${this._tagline}</p>
         <p class="price">${this._price}€/jour</p>
       `;
-    return (article);
+        return (article);
 
     }
 }
- export {photographerFactory};
-
-
-
-
- 
+export {
+    photographerFactory
+};
