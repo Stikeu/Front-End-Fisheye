@@ -19,36 +19,31 @@ class photographerPage {
         this.photographerId = new URLSearchParams(window.location.search).get("id");
 
     }
-
+    //Récupération Photographer par id
     async getPhotographerById() {
         const photographerList = await this.photographersApi.getPhotographers();
-        // console.log(photographerList)
         const filterPhotographer = photographerList.filter(photographer => {
             return photographer.id == this.photographerId;
         });
-
-        // console.log(filterPhotographer)
         return filterPhotographer;
 
     }
+    // Récupération Nom photographer par l'id 
     async getPhotographerNameById() {
         const photographer = await this.getPhotographerById();
         const photographerName = photographer[0].name
         return photographerName
     }
+    // Récupération des médias du photographer par l'id
     async getMediaById() {
         const mediaPhotographersList = await this.mediaPhotographersApi.getMediaPhotographers();
-        // console.log(mediaPhotographersList)
         const filterMediaPhotographer = mediaPhotographersList.filter(media => {
             return media.photographerId == this.photographerId;
         });
         return filterMediaPhotographer;
     }
-    async sumOfAllLikes() {
-        const filterMediaPhotographer = await this.getMediaById();
-        const likesTab = filterMediaPhotographer.map(media => media.likes).reduce((acc, amount) => acc + amount);
-        return likesTab;
-    }
+
+    // Affichage du header de la page photographer (Photo, nom,prénom,vile, phrase) avec le bouton contact
     photographerHeader(photographer, media) {
         const header = document.querySelector('.photograph-header');
         const div = document.createElement('div');
@@ -80,11 +75,10 @@ class photographerPage {
     }
 
 
-
+    //Affichage des media du photographer par l'id
     async displayMedia() {
         const photographerMedia = await this.getMediaById();
         const name = await this.getPhotographerNameById();
-        // const mediaSection = document.querySelector(".media_section")
         photographerMedia.forEach((media) => {
             const mediaModel = new mediaFactory(media, name)
             mediaSection.appendChild(mediaModel);
@@ -93,25 +87,27 @@ class photographerPage {
         this.addLike();
     }
 
+    //Affichage des medias après le trie 
     async displayMediaOrder(media) {
         const photographerMedia = media;
         const name = await this.getPhotographerNameById();
         photographerMedia.forEach((media) => {
             const mediaModel = new mediaFactory(media, name);
-            console.log(mediaModel)
             mediaSection.appendChild(mediaModel);
             lightbox();
-        })
-    }
 
+        })
+        this.addLike()
+    }
+    // trie des media 
     orderMedia(media) {
         const selectElement = document.getElementById("chooseOrder");
         selectElement.addEventListener("click", (e) => {
             media = this.trie(e.target.value, media);
-            console.log(media);
             document.querySelector(".media_section").innerHTML = "";
             this.displayMediaOrder(media);
         })
+        this.addLike()
     }
     trie(option, media) {
         switch (option) {
@@ -125,7 +121,6 @@ class photographerPage {
                     }
                     return 0;
                 })
-                break;
             case 'date':
                 return media.sort(function (a, b) {
                     if (a.date < b.date) {
@@ -136,7 +131,6 @@ class photographerPage {
                     }
                     return 0;
                 })
-                break;
             case 'title':
                 return media.sort(function (a, b) {
                     if (a.title < b.title) {
@@ -147,28 +141,24 @@ class photographerPage {
                     }
                     return 0;
                 })
-                break;
             default:
                 return media;
-                break;
         }
     }
 
-
+    // Gestion des likes sur les photos du media 
     addLike() {
         const Likes = document.querySelectorAll(".image_likes");
         let totalLikes = document.getElementById("total-likes");
         Likes.forEach((like) => {
-            like.addEventListener("click", () => {
+            like.addEventListener("click", (e) => {
                 let likesValue = like.querySelector(".likes_number");
                 let likesNumber = +likesValue.textContent;
                 let totalNumber = +totalLikes.textContent;
                 like.classList.toggle("active");
                 if (like.classList.contains("active")) {
                     likesValue.textContent = ++likesNumber;
-                    console.log(likesNumber)
                     totalLikes.textContent = ++totalNumber
-                    console.log(totalLikes.textContent)
                 } else {
                     likesValue.textContent = --likesNumber;
                     totalLikes.textContent = --totalNumber
@@ -178,11 +168,19 @@ class photographerPage {
         });
     }
 
+    // calcul du nombre de likes sur les photos (résultat en bas a droite de la page)
+    async sumOfAllLikes() {
+        const filterMediaPhotographer = await this.getMediaById();
+        const likesTab = filterMediaPhotographer.map(media => media.likes).reduce((acc, amount) => acc + amount);
+        return likesTab;
+    }
+    //affichage général de la page
     async displayPhotographerPage() {
         const photographer = await this.getPhotographerById();
+        const PhotographerNameById = await this.getPhotographerNameById();
         const likesTab = await this.sumOfAllLikes();
         const medias = await this.getMediaById();
-        this.photographerHeader(photographer, likesTab);
+        const header = this.photographerHeader(photographer, likesTab);
         this.orderMedia(medias);
         this.displayMedia();
         lightbox();
