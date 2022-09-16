@@ -1,15 +1,44 @@
 const modal = document.getElementById("contact_modal");
-const close_Modal = document.querySelector(".close_Modal")
+const close_Modal = document.querySelector(".close_Modal");
+const main = document.getElementById("main");
+const header = document.getElementById("header");
+
 
 function displayModal() {
   modal.style.display = "flex";
+  main.ariaHidden = "true";
+  modal.ariaHidden = "false";
+  header.ariaHidden = "true";
   close_Modal.focus();
 }
 
 function closeModal() {
   modal.style.display = "none";
+  main.ariaHidden = "false";
+  modal.ariaHidden = "true";
+  header.ariaHidden = "false";
 }
 
+close_Modal.addEventListener("click", (e) => {
+  e.preventDefault();
+  closeModal();
+});
+
+window.addEventListener("keydown", (e) => {
+  if (
+    document.getElementById("contact_modal").getAttribute("aria-hidden") == "false"
+  ) {
+    e.preventDefault();
+    switch (e.key) {
+      case "Escape":
+          closeModal();
+          break;
+
+        default:
+          return;
+        }
+      }
+    });
 
 const submitBtn = document.querySelector(".contact_button")
 
