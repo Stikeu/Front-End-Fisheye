@@ -19,27 +19,14 @@ function closeModal() {
   header.ariaHidden = "false";
 }
 
-close_Modal.addEventListener("click", (e) => {
-  e.preventDefault();
-  closeModal();
-});
+function CloseModalKey(e) {
+  if (e.key === "Escape") {
+    closeModal()
+  }
+  
+}
 
-window.addEventListener("keydown", (e) => {
-  if (
-    document.getElementById("contact_modal").getAttribute("aria-hidden") == "false"
-  ) {
-    e.preventDefault();
-    switch (e.key) {
-      case "Escape":
-          closeModal();
-          break;
-
-        default:
-          return;
-        }
-      }
-    });
-
+document.addEventListener("keyup", CloseModalKey);
 const submitBtn = document.querySelector(".contact_button")
 
 const prenom = document.getElementById("first");
